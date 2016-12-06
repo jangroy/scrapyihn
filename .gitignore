@@ -1,0 +1,10 @@
+.idea
+/dbs
+/eggs
+log
+logs
+files
+images
+project.egg-info
+build
+jsons
