@@ -46,7 +46,7 @@ class RasplayerPipeline(object):
     def process_item(self, item, spider):
         # print("in rasplayer pipeline, item:", item)
         self.items_count += 1
-        if self.items_count >= spider.items_limit:
+        if self.items_count > spider.items_limit:
             raise DropItem("items_limit exceeded")
         else:
             # print("item:", item)
