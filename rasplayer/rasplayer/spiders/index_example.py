@@ -33,8 +33,8 @@ class IndexSpiderExample(IndexSpider):
 
     loader = CustomLoader
 
-    items_limit = 100
-    partition_size = 100
+    items_limit = 200
+    partition_size = 50
 
     # pages_limit = 10
     #items_per_page_limit = 10
