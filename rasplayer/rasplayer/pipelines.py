@@ -47,7 +47,8 @@ class RasplayerPipeline(object):
         # print("in rasplayer pipeline, item:", item)
         self.items_count += 1
         if self.items_count > spider.items_limit:
-            raise DropItem("items_limit exceeded")
+            return None
+            # raise DropItem("items_limit exceeded")
         else:
             # print("item:", item)
             if getattr(spider, 'mode', None) != 'test':
