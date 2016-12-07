@@ -26,18 +26,20 @@ def next_page_url_fn_selector(s, r):
 
 class IndexItemSpiderExample(IndexItemSpider):
     name = "index-item-example"
-    allowed_domains = ['www.destinationhonda.ca']
+    allowed_domains = ['www.destinationhonda.ca', "pictures.dealer.com"]
     start_urls = ['http://www.destinationhonda.ca/used-inventory/index.htm']
     ajax = True
 
     items_selector = items_selector
     item_url_selector = 'a.url::attr(href)'
 
-    index_attrs = {'transmission': '.last dd:nth-child(6)'}
+    index_attrs = {'transmission': '.last dd:nth-child(6)',
+                   'image_urls': '.photo::attr(src)'}
     item_attrs = {'name': '.ddc-page-title'}
 
     next_page_url_selector = next_page_url_fn_selector
 
     loader = CustomLoader
 
+    items_per_page_limit = 4
     pages_limit = 1

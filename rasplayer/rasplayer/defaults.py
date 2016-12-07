@@ -4,6 +4,11 @@ from scrapy.item import Item
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import TakeFirst, MapCompose, Join, Identity, Compose
 from w3lib.html import remove_tags
+import urlparse
+
+
+def get_full_url(src, loader_context):
+    return urlparse.urljoin(loader_context.get('url'), src)
 
 
 class DefaultSpider(scrapy.Spider):
@@ -24,7 +29,9 @@ class DefaultLoader(ItemLoader):
     default_input_processor = MapCompose(remove_tags, unicode.strip)
     default_output_processor = TakeFirst()
 
-    image_urls_out = Identity()
+    image_urls_out = MapCompose(get_full_url)
+    file_urls_out = MapCompose(get_full_url)
+    # image_urls_out = Identity()
 
 
 def merge_dicts(x, y):
@@ -157,7 +164,7 @@ class IndexItemSpider(DefaultSpider):
             for item in get_items(self, response)[:self.items_per_page_limit]:
 
                 # Retrieves the ItemLoader
-                loader = loader_class(item=index_class(), selector=item)
+                loader = loader_class(item=index_class(), selector=item, url=response.url)
 
                 # Loads the index attributes into the loader
                 load_attrs(loader, index_attrs)
