@@ -8,3 +8,4 @@ images
 project.egg-info
 build
 jsons
+node_modules

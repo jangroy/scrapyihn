@@ -138,7 +138,7 @@ class IndexSpider(DefaultSpider):
 
             for item in items[:self.items_per_page_limit]:
                 # Retrieves the ItemLoader
-                loader = loader_class(item=item_class(), selector=item)
+                loader = loader_class(item=item_class(), selector=item, url=response.url)
 
                 # Loads the item attributes into the loader
                 load_attrs(loader, attrs)
@@ -192,7 +192,7 @@ class IndexItemSpider(DefaultSpider):
         # Defines the index_class and loader_class
         item_class = get_item_class(attrs)
         loader_class = get_loader_class(self)
-        loader = loader_class(item=item_class(), selector=response)
+        loader = loader_class(item=item_class(), selector=response, url=response.url)
         load_attrs(loader, attrs)
 
         # for attr in response.meta['item']:

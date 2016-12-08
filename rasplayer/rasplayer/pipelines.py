@@ -47,8 +47,8 @@ class RasplayerPipeline(object):
         # print("in rasplayer pipeline, item:", item)
         self.items_count += 1
         if self.items_count > spider.items_limit:
-            return None
-            # raise DropItem("items_limit exceeded")
+            # return None
+            raise DropItem("items_limit exceeded")
         else:
             # print("item:", item)
             if getattr(spider, 'mode', None) != 'test':
@@ -72,7 +72,6 @@ class RasplayerPipeline(object):
                 print "Error running frames controller::::", exc.returncode, exc.output
                 logging.error("Error running frames controller:%d, %s", exc.returncode, exc.output)
             else:
-                logging.warning("Closing spider, items: %d", self.items_count)
                 print "Frames Controller output:\n", output
                 print("closing spider, items:", self.items_count)
 
@@ -82,4 +81,7 @@ class RasplayerPipeline(object):
             #       "--partition-size", str(spider.partition_size)])
         else:
             print("running in test mode, not calling the frames controller")
+
+        logging.warning("Closing spider, items: %d", self.items_count)
+
 
