@@ -37,6 +37,9 @@ In order to use this scraper with Rasplayer, the following steps must be followe
 4. Set the frames controller as active
 5. [Add the spider to DB](#add-the-spider-to-db)
 
+It is recommended to install the extension [selector gadget](http://selectorgadget.com/)
+on the browser
+
 ## Create a spider
 
 [see docs](https://doc.scrapy.org/en/1.2/topics/spiders.html)
