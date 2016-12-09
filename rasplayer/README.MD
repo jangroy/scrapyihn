@@ -4,29 +4,23 @@ Rasplayer scraper
 [TOC]
 
 # Rationale
-
 This project is based on the open source project [Scrapy](https://docs.scrapy.org)
 There is only one Scrapy project called Rasplayer. Under this project there will be multiple spiders.
 This project is meant to be used in conjunction with Rasplayer Frames Controllers, and with the **spider-frames-controller** project
 
 # Scraper server
-
 The server needs to run Splash, Scrapyd, and spider-frames-controller
 
 ## Splash
-
 Run ```./run-splash.sh``` (needs Docker)
 
 ## Scrapyd
-
 Run ```scrapyd``` (see [Scrapyd](https://scrapyd.readthedocs.io/en/stable/)
 
 ## Spider-frames-controller
-
 Run ```[path-to-spider-frames-controller]/scheduler-index.js```
 
 # Scraping
-
 In order to use this scraper with Rasplayer, the following steps must be followed:
 
 1. [Create a spider](#create-a-spider)
@@ -41,7 +35,6 @@ It is recommended to install the extension [selector gadget](http://selectorgadg
 on the browser
 
 ## Create a spider
-
 [see docs](https://doc.scrapy.org/en/1.2/topics/spiders.html)
 
 In order to create a spider, a new file has to be added to *rasplayer/spiders*
@@ -172,7 +165,7 @@ Results will be merged with [index_attrs](#index_attrs) for each item
 
 Same format as [attrs](#attrs)
 
-### Test the spider
+## Test the spider
 Once you created the spider, you can test it running the command
 ```
 $ ./test-spider.sh
@@ -183,7 +176,7 @@ items into *jsons/[spider-name].json*
 You must then check logs for errors, and make sure that the retrieved items are as expected
 (the items in the JSON are not partitioned yet, and not processed by scripts tho)
 
-### Deploy the spider
+## Deploy the spider
 To deploy the spider into the **Scrapy server**, run the command
 ```
 $ ./deploy.sh
@@ -192,11 +185,11 @@ from the project folder. (Scraper server must be running scrapyd)
 
 Every time a change is made on the spider, it needs to be re-deployed again.
 
-### Create a frames controller
+## Create a frames controller
 Create the frames controller using the legacy API.
 Set it as inactive so main frames controller process don't process it.
 
-### Set spider id on frame controller (manually only for now)
+## Set spider id on frame controller (manually only for now)
 Add a spiderId into the frame controller on DB.
 
 To figure out the frame controller id on DB:
@@ -205,7 +198,7 @@ To figure out the frame controller id on DB:
 2. Open another browser window with *firebase/framesControllers*
 3. Look at all the frames controllers in (1) on the list on (2) and looking at the name attribute
 
-### Add the spider to db
+## Add the spider to db
 Add an object in *firebase/spiders/spider-name* like
 
 ```javascript
@@ -214,13 +207,12 @@ Add an object in *firebase/spiders/spider-name* like
 
 The interval is given in minutes.
 
-## Processing the items with scripts
-
+# Processing the items with scripts
 If there is any operation that must be performed with the whole collection of items (like sorting),
 or you want to modify the items in a more flexible way using javascript instead, you can add a script
 to the frame controller.
 
-### Create the script
+## Create the script
 Create a script in the folder *scripts*. You can give it any name, but it is recommended that the name contains
 the name of the spider: for a spider called *yvr-arrivals*, a good name would be *yvr-arrivals-sort-asc.js*, for example.
 
@@ -233,6 +225,6 @@ module.exports = {
     run: run
 };
 ```
-### Add the script to the frames controller
+## Add the script to the frames controller
 Go to *firebase/clients/[clientId]/framesControllers/frameControllerId and add an attribute
 **script** with the name of the script as a value (without the .js extension). ie: *yvr-arrivals-sort-asc*
